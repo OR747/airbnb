@@ -10,7 +10,7 @@ export default function HomeScreen() {
       const response = await axios.get(
         " https://express-airbnb-api.herokuapp.com/rooms"
       );
-      //console.log(response.data);
+      console.log(response.data);
       setData(response.data);
     } catch (error) {
       console.log(error.message);
@@ -30,11 +30,9 @@ export default function HomeScreen() {
       </View>
       <FlatList
         data={Data}
-        renderItem={({ item }) => {
-          console.log(item.price);
-          return <Text>{item.price}</Text>;
+        renderItem={({ photos }) => {
+          return <Text>{photos.url}</Text>;
         }}
-        keyExtractor={(item) => item.id}
       />
     </View>
   );
