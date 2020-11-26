@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useRoute } from "@react-navigation/core";
-import { Text, View } from "react-native";
+import { Text, View, ActivityIndicator } from "react-native";
 import axios from "axios";
 
-export default function ProfileScreen() {
+export default function RoomScreen() {
   const { params } = useRoute();
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -13,7 +13,7 @@ export default function ProfileScreen() {
       const response = await axios.get(
         `https://express-airbnb-api.herokuapp.com/rooms/${id}`
       );
-      //console.log(response.data);
+      console.log(response.data);
       setData(response.data);
       setIsLoading(false);
     } catch (error) {
@@ -23,13 +23,14 @@ export default function ProfileScreen() {
   useEffect(() => {
     //console.log("Rentre dans le useEffect");
     fetchData();
-  }, []);
+  }, [id]);
 
   return isLoading ? (
-    <Text>en cour de chargement</Text>
+    <ActivityIndicator size="large" color="#FFBAC0" />
   ) : (
     <View>
-      <Text>user id : {params.userId}</Text>
+      <Text>user id : {route.params._id}</Text>
+      <Text>{item.title}</Text>
     </View>
   );
 }
