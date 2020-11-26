@@ -56,13 +56,13 @@ export default function HomeScreen() {
       <FlatList
         data={data}
         renderItem={({ item }) => {
-          // console.log(item.photos.url);
           return (
             <TouchableOpacity
               style={styles.touchableOpacity}
               onPress={() => {
                 navigation.navigate("Room", {
-                  id: item.id,
+                  id: item._id,
+                  //room: item,
                 });
               }}
             >
@@ -87,7 +87,9 @@ export default function HomeScreen() {
               </View>
               <View style={styles.container3}>
                 <View style={styles.container2}>
-                  <Text style={styles.title}>{item.title} </Text>
+                  <Text style={styles.title} numberOfLines={1}>
+                    {item.title}
+                  </Text>
                   <View style={styles.rating}>
                     <View style={styles.ratingValue}>
                       {displayStars(item.ratingValue)}
