@@ -120,7 +120,7 @@ export default function RoomScreen() {
         </Text>
       </TouchableOpacity>
       {/* <Text>{data.location}</Text> */}
-      <MapView
+      {/* <MapView
         style={styles.map}
         // provider={PROVIDER_GOOGLE}
         initialRegion={{
@@ -131,9 +131,17 @@ export default function RoomScreen() {
         }}
         showsUserLocation={true}
       >
-        <MapView.Marker coordinate={data.location} />
-        );
-      </MapView>
+        {data.map((item, index) => {
+          return (
+            <MapView.Marker
+              coordinate={{
+                latitude: item.location[0],
+                longitude: item.location[1],
+              }}
+            />
+          );
+        })}
+      </MapView> */}
     </View>
   );
 }
