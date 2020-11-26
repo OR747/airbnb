@@ -11,11 +11,16 @@ import {
 import axios from "axios";
 import { FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/core";
+import MapView from "react-native-maps";
+import * as Location from "expo-location";
+
 export default function RoomScreen() {
   const { params } = useRoute();
   const navigation = useNavigation();
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [latitude, setLatitude] = useState();
+  const [longitude, setLongitude] = useState();
 
   const fetchData = async () => {
     try {
@@ -29,8 +34,30 @@ export default function RoomScreen() {
       console.log(error.message);
     }
   };
+
   useEffect(() => {
     console.log("Rentre dans le useEffect");
+
+    const askPermissionAndGetLocation = async () => {
+      // console.log("ask permission");
+      const { status } = await Location.requestPermissionsAsync();
+      console.log(status);
+
+      if (status === "granted") {
+        console.log("Permission acceptée");
+
+        const location = await Location.getCurrentPositionAsync();
+        //console.log(location);
+        console.log(location.coords.latitude);
+        console.log(location.coords.longitude);
+        setLatitude(location.coords.latitude);
+        setLongitude(location.coords.longitude);
+      } else {
+        console.log("Permission refusée");
+      }
+    };
+    askPermissionAndGetLocation();
+
     fetchData();
   }, []);
 
@@ -47,6 +74,7 @@ export default function RoomScreen() {
 
     return tab;
   };
+
   return isLoading ? (
     <ActivityIndicator size="large" color="#FFBAC0" />
   ) : (
@@ -84,13 +112,28 @@ export default function RoomScreen() {
       </View>
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate("Room");
+          navigation.navigate("Room", { description: data.description });
         }}
       >
         <Text style={styles.descirption} numberOfLines={3}>
           {data.description}
         </Text>
       </TouchableOpacity>
+      {/* <Text>{data.location}</Text> */}
+      <MapView
+        style={styles.map}
+        // provider={PROVIDER_GOOGLE}
+        initialRegion={{
+          latitude: 37.785834,
+          longitude: -122.406417,
+          latitudeDelta: 0.1,
+          longitudeDelta: 0.1,
+        }}
+        showsUserLocation={true}
+      >
+        <MapView.Marker coordinate={data.location} />
+        );
+      </MapView>
     </View>
   );
 }
@@ -154,5 +197,9 @@ const styles = StyleSheet.create({
     // borderWidth: 2,
     // borderColor: "#FC8083",
     marginTop: -30,
+  },
+  map: {
+    height: 300,
+    width: 300,
   },
 });
