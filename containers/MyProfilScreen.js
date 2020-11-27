@@ -10,7 +10,7 @@ import {
 import { useNavigation } from "@react-navigation/core";
 import axios from "axios";
 
-export default function MyProfilScreen({ setToken }) {
+export default function MyProfilScreen({ setToken, setId }) {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [description, setDescription] = useState("");
@@ -22,7 +22,12 @@ export default function MyProfilScreen({ setToken }) {
         "https://express-airbnb-api.herokuapp.com/user/:id"
       );
       console.log(response.data);
-      setData(response.data);
+
+      if (response.data.id) {
+        setId(response.data.id);
+      } else {
+        alert("An error occurred");
+      }
       setIsLoading(false);
     } catch (error) {
       console.log(error.message);

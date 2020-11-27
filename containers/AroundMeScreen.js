@@ -79,21 +79,12 @@ export default function ArrounMeScreen() {
     >
       {data.map((item, index) => {
         return (
-          <TouchableOpacity
-            style={styles.touchableOpacity}
-            onPress={() => {
-              navigation.navigate("Room", {
-                id: item._id,
-              });
+          <MapView.Marker
+            coordinate={{
+              latitude: item.location[1],
+              longitude: item.location[0],
             }}
-          >
-            <MapView.Marker
-              coordinate={{
-                latitude: item.location[1],
-                longitude: item.location[0],
-              }}
-            />
-          </TouchableOpacity>
+          />
         );
       })}
     </MapView>
