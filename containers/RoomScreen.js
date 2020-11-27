@@ -97,15 +97,25 @@ export default function RoomScreen() {
       </TouchableOpacity>
       {/* <Text>{data.location}</Text> */}
 
-      {/* <MapView style={styles.map}>
+      <MapView
+        style={styles.map}
+        initialRegion={{
+          // latitude: 37.785834,
+          // longitude: -122.406417,
+          latitude: 48.856614,
+          longitude: 2.3522219,
+          latitudeDelta: 0.09,
+          longitudeDelta: 0.09,
+        }}
+        showsUserLocation={true}
+      >
         <MapView.Marker
           coordinate={{
             latitude: data.location[1],
             longitude: data.location[0],
           }}
         />
-        );
-      </MapView> */}
+      </MapView>
     </View>
   );
 }
@@ -172,7 +182,9 @@ const styles = StyleSheet.create({
     marginTop: -30,
   },
   map: {
+    paddingHorizontal: 20,
+    marginTop: 10,
     height: 300,
-    width: 300,
+    width: 450,
   },
 });

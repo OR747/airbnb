@@ -10,10 +10,10 @@ import Logo from "./components/Logo";
 
 //containers
 import HomeScreen from "./containers/HomeScreen";
-import ProfileScreen from "./containers/ProfileScreen";
+import MyProfilScreen from "./containers/MyProfilScreen";
 import SignInScreen from "./containers/SignInScreen";
 import SignUpScreen from "./containers/SignUpScreen";
-import SettingsScreen from "./containers/SettingsScreen";
+
 import RoomScreen from "./containers/RoomScreen";
 import AroundMeScreen from "./containers/AroundMeScreen";
 
@@ -139,9 +139,9 @@ export default function App() {
                 </Tab.Screen>
 
                 <Tab.Screen
-                  name="Settings"
+                  name="MyProfil"
                   options={{
-                    tabBarLabel: "Settings",
+                    tabBarLabel: "MyProfil",
                     tabBarIcon: ({ color, size }) => (
                       <Ionicons
                         name={"ios-options"}
@@ -154,12 +154,12 @@ export default function App() {
                   {() => (
                     <Stack.Navigator>
                       <Stack.Screen
-                        name="Settings"
+                        name="MyProfil"
                         options={{
                           headerTitle: () => <Logo />,
                         }}
                       >
-                        {() => <SettingsScreen setToken={setToken} />}
+                        {() => <MyProfilScreen setToken={setToken} />}
                       </Stack.Screen>
                     </Stack.Navigator>
                   )}
