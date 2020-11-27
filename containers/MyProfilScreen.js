@@ -10,7 +10,7 @@ import {
 import { useNavigation } from "@react-navigation/core";
 import axios from "axios";
 
-export default function MyProfilScreen({ setToken, setId }) {
+export default function MyProfilScreen({ setToken, setId, userId }) {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [description, setDescription] = useState("");
@@ -19,15 +19,17 @@ export default function MyProfilScreen({ setToken, setId }) {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "https://express-airbnb-api.herokuapp.com/user/:id"
+        `https://express-airbnb-api.herokuapp.com/user/${userId}`,
+        {
+          headers: {
+            Authorization: "Bearer " + userToken,
+          },
+        }
       );
       console.log(response.data);
 
-      if (response.data.id) {
-        setId(response.data.id);
-      } else {
-        alert("An error occurred");
-      }
+      setUserName(response.data.username);
+
       setIsLoading(false);
     } catch (error) {
       console.log(error.message);
