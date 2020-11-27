@@ -6,14 +6,16 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 //components
 import Logo from "./components/Logo";
+//icônes
 
-//conatiners
+//containers
 import HomeScreen from "./containers/HomeScreen";
 import ProfileScreen from "./containers/ProfileScreen";
 import SignInScreen from "./containers/SignInScreen";
 import SignUpScreen from "./containers/SignUpScreen";
 import SettingsScreen from "./containers/SettingsScreen";
 import RoomScreen from "./containers/RoomScreen";
+import AroundMeScreen from "./containers/AroundMeScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -110,6 +112,32 @@ export default function App() {
                   )}
                 </Tab.Screen>
 
+                {/*AroundMe*/}
+
+                <Tab.Screen
+                  name="Around Me"
+                  options={{
+                    headerTitle: () => <Logo />,
+                    // permet d'ajouter dans le header le logo du components Logo pour l'afficher
+                    tabBarIcon: ({ color, size }) => (
+                      <Ionicons name={"ios-pin"} size={size} color={color} />
+                    ),
+                  }}
+                >
+                  {() => (
+                    <Stack.Navigator>
+                      <Stack.Screen
+                        name="Around Me"
+                        options={{
+                          headerTitle: () => <Logo />,
+                        }}
+                      >
+                        {() => <AroundMeScreen setToken={setToken} />}
+                      </Stack.Screen>
+                    </Stack.Navigator>
+                  )}
+                </Tab.Screen>
+
                 <Tab.Screen
                   name="Settings"
                   options={{
@@ -127,7 +155,9 @@ export default function App() {
                     <Stack.Navigator>
                       <Stack.Screen
                         name="Settings"
-                        options={{ title: "Settings", tabBarLabel: "Settings" }}
+                        options={{
+                          headerTitle: () => <Logo />,
+                        }}
                       >
                         {() => <SettingsScreen setToken={setToken} />}
                       </Stack.Screen>

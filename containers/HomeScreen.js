@@ -73,9 +73,6 @@ export default function HomeScreen() {
                       uri: item.photos[0].url,
                     }}
                     resizeMode="cover"
-                    onPress={() => {
-                      navigation.navigate("Profile", { userId: item._id });
-                    }}
                     style={styles.img}
                   ></Image>
                 </View>

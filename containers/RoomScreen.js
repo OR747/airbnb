@@ -11,16 +11,12 @@ import {
 import axios from "axios";
 import { FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/core";
-import MapView from "react-native-maps";
-import * as Location from "expo-location";
-
+import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 export default function RoomScreen() {
   const { params } = useRoute();
   const navigation = useNavigation();
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const [latitude, setLatitude] = useState();
-  const [longitude, setLongitude] = useState();
 
   const fetchData = async () => {
     try {
@@ -37,26 +33,6 @@ export default function RoomScreen() {
 
   useEffect(() => {
     console.log("Rentre dans le useEffect");
-
-    const askPermissionAndGetLocation = async () => {
-      // console.log("ask permission");
-      const { status } = await Location.requestPermissionsAsync();
-      console.log(status);
-
-      if (status === "granted") {
-        console.log("Permission acceptée");
-
-        const location = await Location.getCurrentPositionAsync();
-        //console.log(location);
-        console.log(location.coords.latitude);
-        console.log(location.coords.longitude);
-        setLatitude(location.coords.latitude);
-        setLongitude(location.coords.longitude);
-      } else {
-        console.log("Permission refusée");
-      }
-    };
-    askPermissionAndGetLocation();
 
     fetchData();
   }, []);
@@ -78,7 +54,7 @@ export default function RoomScreen() {
   return isLoading ? (
     <ActivityIndicator size="large" color="#FFBAC0" />
   ) : (
-    <View>
+    <View style={styles.container}>
       <Image
         source={{
           uri: data.photos[0].url,
@@ -120,32 +96,21 @@ export default function RoomScreen() {
         </Text>
       </TouchableOpacity>
       {/* <Text>{data.location}</Text> */}
-      {/* <MapView
-        style={styles.map}
-        // provider={PROVIDER_GOOGLE}
-        initialRegion={{
-          latitude: 37.785834,
-          longitude: -122.406417,
-          latitudeDelta: 0.1,
-          longitudeDelta: 0.1,
-        }}
-        showsUserLocation={true}
-      >
-        {data.map((item, index) => {
-          return (
-            <MapView.Marker
-              coordinate={{
-                latitude: item.location[0],
-                longitude: item.location[1],
-              }}
-            />
-          );
-        })}
+
+      {/* <MapView style={styles.map}>
+        <MapView.Marker
+          coordinate={{
+            latitude: data.location[1],
+            longitude: data.location[0],
+          }}
+        />
+        );
       </MapView> */}
     </View>
   );
 }
 const styles = StyleSheet.create({
+  conatiner: { flex: 1 },
   img: {
     height: 300,
     width: 450,
