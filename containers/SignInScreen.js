@@ -12,7 +12,7 @@ import {
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import axios from "axios";
 
-export default function SignInScreen({ setToken }) {
+export default function SignInScreen({ setToken, setId }) {
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -44,6 +44,7 @@ export default function SignInScreen({ setToken }) {
         console.log(response.data);
         if (response.data.token) {
           setToken(response.data.token);
+          setId(response.data.id);
           navigation.navigate("Home");
         } else {
           alert("An error occurred");

@@ -31,8 +31,8 @@ export default function App() {
     } else {
       AsyncStorage.removeItem("UserId");
     }
+    setUserId(id);
   };
-  setUserId(id);
 
   const setToken = async (token) => {
     if (token) {
@@ -73,7 +73,7 @@ export default function App() {
           </Stack.Screen>
 
           <Stack.Screen name="SignIn">
-            {() => <SignInScreen setToken={setToken} />}
+            {() => <SignInScreen setToken={setToken} setId={setId} />}
           </Stack.Screen>
         </Stack.Navigator>
       ) : (
@@ -170,7 +170,13 @@ export default function App() {
                           headerTitle: () => <Logo />,
                         }}
                       >
-                        {() => <MyProfilScreen setToken={setToken} />}
+                        {() => (
+                          <MyProfilScreen
+                            setToken={setToken}
+                            setId={setId}
+                            userId={userId}
+                          />
+                        )}
                       </Stack.Screen>
                     </Stack.Navigator>
                   )}

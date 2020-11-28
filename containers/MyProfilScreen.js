@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   Button,
   Text,
@@ -12,24 +13,28 @@ import axios from "axios";
 
 export default function MyProfilScreen({ setToken, setId, userId }) {
   const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
+  const [username, setUserName] = useState("");
   const [description, setDescription] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchData = async () => {
     try {
+      //const id = await AsyncStorage.getItem("userId");
+      const token = await AsyncStorage.getItem("userToken");
+      console.log(userId);
+      console.log(token);
+
       const response = await axios.get(
         `https://express-airbnb-api.herokuapp.com/user/${userId}`,
         {
           headers: {
-            Authorization: "Bearer " + userToken,
+            Authorization: "Bearer " + token,
           },
         }
       );
-      console.log(response.data);
 
       setUserName(response.data.username);
-
+      setEmail(response.data.email);
       setIsLoading(false);
     } catch (error) {
       console.log(error.message);
@@ -47,7 +52,7 @@ export default function MyProfilScreen({ setToken, setId, userId }) {
       <View style={styles.input1}>
         <TextInput
           placeholder="email"
-          //value={data.email}
+          value={email}
           onChangeText={(text) => {
             setEmail(text);
           }}
@@ -56,6 +61,7 @@ export default function MyProfilScreen({ setToken, setId, userId }) {
       <View style={styles.input2}>
         <TextInput
           placeholder="usurname"
+          value={username}
           onChangeText={(text) => {
             setUsername(text);
           }}
