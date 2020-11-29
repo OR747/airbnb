@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import axios from "axios";
 import { FontAwesome } from "@expo/vector-icons";
@@ -17,6 +18,7 @@ export default function RoomScreen() {
   const navigation = useNavigation();
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [displayAllText, setDisplayAllText] = useState(false);
 
   const fetchData = async () => {
     try {
@@ -54,7 +56,7 @@ export default function RoomScreen() {
   return isLoading ? (
     <ActivityIndicator size="large" color="#FFBAC0" />
   ) : (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Image
         source={{
           uri: data.photos[0].url,
@@ -88,10 +90,13 @@ export default function RoomScreen() {
       </View>
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate("Room", { description: data.description });
+          setDisplayAllText(!displayAllText);
         }}
       >
-        <Text style={styles.descirption} numberOfLines={3}>
+        <Text
+          numberOfLines={displayAllText === false ? 3 : null}
+          style={styles.descirption}
+        >
           {data.description}
         </Text>
       </TouchableOpacity>
@@ -100,14 +105,15 @@ export default function RoomScreen() {
       <MapView
         style={styles.map}
         initialRegion={{
-          // latitude: 37.785834,
-          // longitude: -122.406417,
-          latitude: 48.856614,
-          longitude: 2.3522219,
+          //   latitude: 37.785834,
+          //   longitude: -122.406417,
+          latitude: data.location[1],
+          longitude: data.location[0],
+          // latitude: 48.856614,
+          // longitude: 2.3522219,
           latitudeDelta: 0.09,
           longitudeDelta: 0.09,
         }}
-        showsUserLocation={true}
       >
         <MapView.Marker
           coordinate={{
@@ -116,7 +122,7 @@ export default function RoomScreen() {
           }}
         />
       </MapView>
-    </View>
+    </ScrollView>
   );
 }
 const styles = StyleSheet.create({
@@ -183,7 +189,7 @@ const styles = StyleSheet.create({
   },
   map: {
     paddingHorizontal: 20,
-    marginTop: 10,
+    marginTop: 30,
     height: 300,
     width: 450,
   },

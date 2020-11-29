@@ -4,6 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 //components
 import Logo from "./components/Logo";
 //icônes
@@ -154,9 +155,9 @@ export default function App() {
                   options={{
                     tabBarLabel: "MyProfil",
                     tabBarIcon: ({ color, size }) => (
-                      <Ionicons
-                        name={"ios-options"}
-                        size={size}
+                      <MaterialCommunityIcons
+                        name="account-outline"
+                        size={24}
                         color={color}
                       />
                     ),
