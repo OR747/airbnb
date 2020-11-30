@@ -97,6 +97,7 @@ export default function MyProfilScreen({ setToken, userId }) {
             name: `userPicture`,
             type: `image/${fileType}`,
           });
+          const token = await AsyncStorage.getItem("userToken");
 
           const response = await axios.put(
             `https://express-airbnb-api.herokuapp.com/user/upload_picture`,
@@ -131,7 +132,7 @@ export default function MyProfilScreen({ setToken, userId }) {
           if (newDescription !== description) {
             obj.description = newDescription;
           }
-
+          const token = await AsyncStorage.getItem("userToken");
           const response = await axios.put(
             `https://express-airbnb-api.herokuapp.com/user/update`,
             // "http://localhost:3000/user/update",
@@ -252,7 +253,7 @@ export default function MyProfilScreen({ setToken, userId }) {
           placeholder="usurname"
           value={username}
           onChangeText={(text) => {
-            setUsername(text);
+            setUserName(text);
           }}
         />
       </View>
